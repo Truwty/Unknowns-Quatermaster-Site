@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete British Army orders of dress specifications for all ceremonial and service uniforms.">
+    <title>Orders of Dress | Quartermaster Store</title>
+    <link rel="icon" href="images/LOGO.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="components.js"></script>
+    <style>
+        .regulations-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .search-container {
+            margin-top: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 18px 30px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-standard);
+            text-align: center;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--primary-scarlet);
+            box-shadow: 0 0 20px var(--scarlet-glow);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .accordion-item {
+            margin-bottom: 25px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(var(--blur));
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .accordion-item:hover {
+            border-color: rgba(201, 162, 39, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .accordion-header {
+            padding: 30px 40px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            transition: all 0.4s ease;
+        }
+
+        .accordion-item.active {
+            border-color: var(--accent-gold);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 20px rgba(201, 162, 39, 0.1);
+        }
+
+        .accordion-item.active .accordion-header {
+            background: linear-gradient(90deg, rgba(201, 162, 39, 0.1) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .accordion-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: var(--font-heading);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-header h2 {
+            color: var(--accent-gold-bright);
+            text-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .accordion-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.5s var(--spring-easing);
+        }
+
+        .accordion-icon::before {
+            content: "▼";
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            transition: transform 0.5s var(--spring-easing);
+        }
+
+        .accordion-item.active .accordion-icon {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold-bright);
+            transform: rotate(180deg);
+        }
+
+        .accordion-item.active .accordion-icon::before {
+            color: var(--primary-royal-blue);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2500px;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            padding: 40px;
+        }
+
+        .content-section {
+            margin-bottom: 25px;
+        }
+
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-section h3 {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-section h3::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: #b91c1c;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ef4444;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding-left: 15px;
+        }
+
+        .content-section ul li {
+            position: relative;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding-left: 20px;
+        }
+
+        .content-section ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-scarlet);
+            font-weight: bold;
+        }
+
+        .content-section p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 40px 20px;
+            }
+            .regulations-container {
+                padding: 12px;
+                margin-left: 0;
+            }
+            .accordion-header {
+                padding: 20px 25px;
+            }
+            .accordion-header h2 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-nav-container"></header>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>Orders of Dress</h1>
+            <p>Complete specifications for all British Army ceremonial and service uniforms.</p>
+            <div class="search-container">
+                <input type="text" id="dressSearch" placeholder="Search dress orders (e.g. No.1 Dress, Ceremonial)..." onkeyup="Components.filterElements(this.value, '.accordion-item')">
+            </div>
+        </header>
+
+        <section class="regulations-container">
+            <div class="intro-section glass-card" style="padding: 40px;">
+                <h2 style="color: #fff; margin-bottom: 20px;">Dress Order Specifications</h2>
+                <p>The British Army maintains strict standards for all orders of dress. Each dress order has specific requirements for uniform components, accessories, and occasions of wear.</p>
+            </div>
+
+            <div class="accordion" id="dressAccordion">
+                <!-- No.1 Dress -->
+                <div class="accordion-item" id="no1-dress">
+                    <div class="accordion-header">
+                        <h2>No.1 Dress (Ceremonial)</h2>
+                        <div class="accordion-icon"></div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-section">
+                            <h3>Who Can Wear It</h3>
+                            <ul>
+                                <li>Officers of the rank OF-2 and above.</li>
+                                <li>Used for ceremonial occasions and parades.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Asset Regulations</h3>
+                            <ul>
+                                <li><strong>Long Gloves:</strong> TRUE</li>
+                                <li><strong>Tattoos:</strong> FALSE</li>
+                                <li><strong>Watches:</strong> FALSE</li>
+                                <li><strong>Combat Gloves:</strong> FALSE</li>
+                                <li><strong>Medals:</strong> TRUE (Full laid-out medals)</li>
+                                <li><strong>Armbands:</strong> TRUE</li>
+                                <li><strong>Pins:</strong> TRUE</li>
+                                <li><strong>Neck Covers:</strong> Available for OF-7+</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>When It Is Worn</h3>
+                            <ul>
+                                <li>Parades, ceremonies, and formal occasions.</li>
+                                <li>Church services and state functions.</li>
+                                <li>Guard duties and public events.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Uniform Details</h3>
+                            <ul>
+                                <li><strong>Coat:</strong> Red tunic with brass buttons and regimental facings.</li>
+                                <li><strong>Trousers:</strong> Dark blue with red stripe.</li>
+                                <li><strong>Headwear:</strong> Peaked cap or bearskin.</li>
+                                <li><strong>Footwear:</strong> Black boots or shoes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No.2 Dress -->
+                <div class="accordion-item" id="no2-dress">
+                    <div class="accordion-header">
+                        <h2>No.2 Dress (Service Dress)</h2>
+                        <div class="accordion-icon"></div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-section">
+                            <h3>Who Can Wear It</h3>
+                            <ul>
+                                <li>Officers of the rank OF-2 and above.</li>
+                                <li>Used for semi-formal occasions.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Asset Regulations</h3>
+                            <ul>
+                                <li><strong>Long Gloves:</strong> TRUE</li>
+                                <li><strong>Tattoos:</strong> FALSE</li>
+                                <li><strong>Watches:</strong> FALSE</li>
+                                <li><strong>Combat Gloves:</strong> FALSE</li>
+                                <li><strong>Medals:</strong> TRUE (Ribbons)</li>
+                                <li><strong>Armbands:</strong> TRUE</li>
+                                <li><strong>Pins:</strong> TRUE</li>
+                                <li><strong>Formal Cord:</strong> Left shoulder (Red/Blue/Orange)</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>When It Is Worn</h3>
+                            <ul>
+                                <li>Less formal parades and ceremonies.</li>
+                                <li>Official visits and receptions.</li>
+                                <li>Mess functions and social events.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Uniform Details</h3>
+                            <ul>
+                                <li><strong>Coat:</strong> Khaki service dress jacket.</li>
+                                <li><strong>Trousers:</strong> Khaki service dress trousers.</li>
+                                <li><strong>Headwear:</strong> Service dress cap.</li>
+                                <li><strong>Footwear:</strong> Black boots or shoes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No.3 Dress -->
+                <div class="accordion-item" id="no3-dress">
+                    <div class="accordion-header">
+                        <h2>No.3 Dress (HQ Dress)</h2>
+                        <div class="accordion-icon"></div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-section">
+                            <h3>Who Can Wear It</h3>
+                            <ul>
+                                <li>Headquarters personnel (AEST Gen.+).</li>
+                                <li>Allows full customization of pins and patches.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Asset Regulations</h3>
+                            <ul>
+                                <li><strong>Long Gloves:</strong> TRUE</li>
+                                <li><strong>Tattoos:</strong> FALSE</li>
+                                <li><strong>Watches:</strong> FALSE</li>
+                                <li><strong>Combat Gloves:</strong> FALSE</li>
+                                <li><strong>Medals:</strong> TRUE (Full laid-out medals)</li>
+                                <li><strong>Armbands:</strong> TRUE</li>
+                                <li><strong>Pins:</strong> TRUE</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Uniform Details</h3>
+                            <ul>
+                                <li><strong>Coat:</strong> Open-necked bush jacket or HQ variant.</li>
+                                <li><strong>Trousers:</strong> Khaki drill trousers.</li>
+                                <li><strong>Headwear:</strong> Optional field service cap.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No.4 Dress -->
+                <div class="accordion-item" id="no4-dress">
+                    <div class="accordion-header">
+                        <h2>No.4 Dress</h2>
+                        <div class="accordion-icon"></div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-section">
+                            <h3>Who Can Wear It</h3>
+                            <ul>
+                                <li>Senior Defence Staff member & 63xy15 are the only members within the military allowed to wear this uniform.</li>
+                                <li>Warm Weather Service Dress</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>When It Is Worn</h3>
+                            <ul>
+                                <li> Less Ceremonial Occasions.</li>
+                                <li>Tropical Weather.</li>
+                                <li>General duties in operational areas.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Uniform Details</h3>
+                            <ul>
+                                <li><strong>Coat:</strong> Light Tan Coat.</li>
+                                <li><strong>Trousers:</strong> Light Tan Formal Dress Trousers.</li>
+                                <li><strong>Headwear:</strong> Formal No.1 Cap.</li>
+                                <li><strong>Footwear:</strong> Black Shoes.</li>
+                                <li><strong>Accessories:</strong> Golden aiguillette.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Regimental Distinctions</h3>
+                            <ul>
+                                <li>Regimental shoulder flashes and arm badges.</li>
+                                <li> Regimental lanyards and collar pins.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No.8 Dress -->
+                <div class="accordion-item" id="no8-dress">
+                    <div class="accordion-header">
+                        <h2>No.8 Dress</h2>
+                        <div class="accordion-icon"></div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-section">
+                            <h3>Who Can Wear It</h3>
+                            <ul>
+                                <li>All ranks during day to day basis.</li>
+                                <li>Worn by British Army Personnel within the academy.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>When It Is Worn</h3>
+                            <ul>
+                                <li>Standard day to day basis.</li>
+                                <li>Short sleeved variants will be available during summer.</li>
+                                <li>Long sleeved variants will be available during summer.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Uniform Details</h3>
+                            <ul>
+                                <li><strong>Coat:</strong> No Coat.</li>
+                                <li><strong>Trousers:</strong> Forest Green Camo Pattern.</li>
+                                <li><strong>Shirt:</strong> British Army Rank on a Forest Green Camo Pattern.</li>
+                                <li><strong>Belt:</strong> Combat Belt.</li>
+                                <li><strong>Footwear:</strong> Brown Working Boots.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Regimental Distinctions</h3>
+                            <ul>
+                                <li>Regimental Combat Belts.</li>
+                                <li>Regimental Pins.</li>
+                                <li>Regiment Abbreviation on Rank Slide.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No.13 Dress -->
+                <div class="accordion-item" id="no13-dress">
+                    <div class="accordion-header">
+                        <h2>No.13 Dress</h2>
+                        <div class="accordion-icon"></div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-section">
+                            <h3>Who Can Wear It</h3>
+                            <ul>
+                                <li>all ranks during day to day basis during winter time.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>When It Is Worn</h3>
+                            <ul>
+                                <li> all ranks during day to day basis during winter time.</li>
+                                <li>Temperate Barrack Dress.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Uniform Details</h3>
+                            <ul>
+                                <li><strong>Coat:</strong> Short-sleeved bush jacket.</li>
+                                <li><strong>Trousers:</strong> Brown trousers.</li>
+                                <li><strong>Headwear:</strong> Beret For enlisted, Cap for Officers.</li>
+                                <li><strong>Footwear:</strong> Black Shoes.</li>
+                                <li><strong>Accessories:</strong> None.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Regimental Distinctions</h3>
+                            <ul>
+                                <li>Regimental collar badges and shoulder flashes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No.14 Dress -->
+                <div class="accordion-item" id="no14-dress">
+                    <div class="accordion-header">
+                        <h2>No.14 Dress (Formal Dress)</h2>
+                        <div class="accordion-icon"></div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-section">
+                            <h3>Who Can Wear It</h3>
+                            <ul>
+                                <li>Worn by all ranks OF-6 and above.</li>
+                                <li>A more customizable formal alternative to No. 1s and No. 2s.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Asset Regulations</h3>
+                            <ul>
+                                <li><strong>Tattoos:</strong> TRUE</li>
+                                <li><strong>Watches:</strong> TRUE</li>
+                                <li><strong>Medals:</strong> TRUE (Ribbons)</li>
+                                <li><strong>Pins:</strong> TRUE</li>
+                                <li><strong>Armbands:</strong> FALSE</li>
+                                <li><strong>Combat/Long Gloves:</strong> FALSE</li>
+                                <li><strong>Customizable Belts:</strong> TRUE (e.g., ETS Blue, RMP Red)</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Uniform Details</h3>
+                            <ul>
+                                <li><strong>Shirt:</strong> White formal shirt.</li>
+                                <li><strong>Trousers:</strong> Dark blue formal trousers.</li>
+                                <li><strong>Accessories:</strong> Regimental belts and chest pins.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Greatcoat & Frock Coat -->
+                <div class="accordion-item" id="greatcoat">
+                    <div class="accordion-header">
+                        <h2>Greatcoat & Frock Coat</h2>
+                        <div class="accordion-icon"></div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-section">
+                            <h3>Who Can Wear It</h3>
+                            <ul>
+                                <li>Rank of Major General (OF-7) and above.</li>
+                                <li>Requires at least two British Army honors (George Medal to Victoria Cross).</li>
+                                <li>Must be permitted by the Quartermaster General.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Asset Regulations</h3>
+                            <ul>
+                                <li><strong>Gloves:</strong> Hand-only, Black color only.</li>
+                                <li><strong>Medals:</strong> Optional display of honors.</li>
+                                <li><strong>Watches/Tattoos:</strong> FALSE.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>When It Is Worn</h3>
+                            <ul>
+                                <li>Ceremonial duties and medal ceremonies.</li>
+                                <li>Winter ceremonial events.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AAC Flightsuit -->
+                <div class="accordion-item" id="aac-flightsuit">
+                    <div class="accordion-header">
+                        <h2>AAC Flightsuit</h2>
+                        <div class="accordion-icon"></div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-section">
+                            <h3>Who Can Wear It</h3>
+                            <ul>
+                                <li>Army Air Corps personnel.</li>
+                                <li>Aircrew and aviation support staff.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>When It Is Worn</h3>
+                            <ul>
+                                <li>Flight operations and aviation duties.</li>
+                                <li>Aviation training and maintenance.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Uniform Details</h3>
+                            <ul>
+                                <li><strong>Suit:</strong> Green flightsuit with zip front.</li>
+                                <li><strong>Headwear:</strong> Flying helmet with communications.</li>
+                                <li><strong>Footwear:</strong> Flying boots.</li>
+                                <li><strong>Accessories:</strong> Life preserver, harness, and survival equipment.</li>
+                            </ul>
+                        </div>
+                        <div class="content-section">
+                            <h3>Regimental Distinctions</h3>
+                            <ul>
+                                <li>AAC wings and qualification badges.</li>
+                                <li>Rank insignia on flightsuit.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="footer-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionItems = document.querySelectorAll('.accordion-item');
+
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+
+                    // Close all other items
+                    accordionItems.forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                    });
+
+                    // Toggle current item
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

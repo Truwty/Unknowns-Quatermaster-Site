@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Test</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000d26;
+            color: #f5f4f0;
+        }
+        .debug-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-info">
+        <h2>Navigation Debug Test</h2>
+        <p>Checking if navigation renders properly...</p>
+        <div id="debug-output"></div>
+    </div>
+
+    <script src="components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const debugOutput = document.getElementById('debug-output');
+            
+            // Check if Components object exists
+            debugOutput.innerHTML += '<p>✓ Components object loaded</p>';
+            
+            // Check if nav container exists after init
+            setTimeout(() => {
+                const navContainer = document.querySelector('.main-nav-container');
+                if (navContainer) {
+                    debugOutput.innerHTML += '<p>✓ Navigation container found</p>';
+                    debugOutput.innerHTML += `<p>Container tag: ${navContainer.tagName}</p>`;
+                    debugOutput.innerHTML += `<p>Container classes: ${navContainer.className}</p>`;
+                    
+                    const nav = document.querySelector('.main-nav');
+                    if (nav) {
+                        debugOutput.innerHTML += '<p>✓ Main nav found</p>';
+                    } else {
+                        debugOutput.innerHTML += '<p>✗ Main nav not found</p>';
+                    }
+                } else {
+                    debugOutput.innerHTML += '<p>✗ Navigation container not found</p>';
+                }
+            }, 1000);
+            
+            // Initialize components
+            Components.init();
+        });
+    </script>
+</body>
+</html>

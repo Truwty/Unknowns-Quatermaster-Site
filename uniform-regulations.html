@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official Uniform Regulations and Orders of Dress for the British Army.">
+    <title>Uniform Regulations & Orders of Dress | Quartermaster Store</title>
+    <link rel="icon" href="images/LOGO.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="components.js"></script>
+</head>
+<body>
+    <header class="main-nav-container"></header>
+    <div class="page-container">
+        <div class="page-header">
+            <h1>💂 Uniform Regulations</h1>
+            <p>Official guidelines for British Army dress orders, insignia, and personal appearance.</p>
+            <div style="margin-top: 30px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                <input type="text" id="regSearch" placeholder="Search regulations..." onkeyup="filterRegulations(this.value)" class="search-input">
+            </div>
+        </div>
+
+        <div class="season-legend">
+            <img src="images/Uniform Seasons.jpg" alt="Uniform Seasons Guide">
+            <div class="legend-info">
+                <div class="season-badge winter">
+                    <div class="winter-box"></div>
+                    <span>Winter Season</span>
+                </div>
+                <div class="season-badge summer">
+                    <div class="summer-box"></div>
+                    <span>Summer Season</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="regulations-container" id="accordionContainer">
+            <!-- Asset Section -->
+            <div class="accordion-item active" data-title="Watches">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h2>⌚ Section 1.1.1 — Watches</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-section">
+                        <p>The watch selection ranges from 1 to 24. Each watch is slightly different, allowing for personalized customization of your uniforms. This becomes one of the primary objectives of the Quartermasters—to provide customizable uniforms within the standards of the buyer.</p>
+                        <img src="images/regulations/watches.png" alt="Watch Selection 1-24" style="width: 100%; border-radius: 12px; margin: 20px 0; border: 1px solid var(--glass-border);">
+                        <h3>Prohibited Placements</h3>
+                        <ul>
+                            <li>No. 1 Formal Uniforms</li>
+                            <li>No. 2 Formal Uniforms</li>
+                            <li>No. 3 HQ Dresses</li>
+                            <li>RGG Summer and Winter Coats</li>
+                            <li>Placement is impossible if gloves are being used.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" data-title="Tattoos">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h2>💉 Section 1.1.2 — Tattoos</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-section">
+                        <p>Tattoos can be placed on uniforms where arms are exposed (e.g., No. 14 formal). Most uniforms that do not have exposed arms will not have tattoo options, with the probable exception of Quartermasters High Command.</p>
+                        <img src="images/regulations/tattoos.png" alt="Tattoo Examples" style="width: 100%; border-radius: 12px; margin: 20px 0; border: 1px solid var(--glass-border);">
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" data-title="Nametags">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h2>🏷️ Section 1.1.3 — Nametags</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-section">
+                        <p>Nametags display your username or custom text. These are available for:</p>
+                        <ul>
+                            <li>Regimental Standards</li>
+                            <li>1GFD Tanker Uniforms</li>
+                            <li>Regimental Combat Uniforms (RCU), etc…</li>
+                        </ul>
+                        <img src="images/regulations/nametags.png" alt="Nametag Examples" style="width: 100%; border-radius: 12px; margin: 20px 0; border: 1px solid var(--glass-border);">
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" data-title="Gloves & Rolled Sleeves">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h2>🧤 Section 1.1.4 & 1.1.5 — Accessories</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-section">
+                        <h3>Gloves</h3>
+                        <p>Available in Black or Tan. Usually worn under sleeves unless sleeves are rolled. Note: If gloves are added, watches may be partially or completely invisible.</p>
+                        <h3>Rolled Sleeves</h3>
+                        <p>Almost every British Army uniform has the option for rolled sleeves, except for formals. Rolled sleeves allow for the display of accessories like watches, gloves, and tattoos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" data-title="Formal Uniforms">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h2>💂 Section 1.1.6 — Formal Uniforms</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-section">
+                        <h3>No. 1 & No. 2 Dress</h3>
+                        <p>Worn by OF-2+. Limited customization: No watches or tattoos. No. 1s use full laid-out medals for ceremonial use, while No. 2s use ribbons. No. 2s also feature a "formal cord" over the left shoulder (Red, Blue, or Orange depending on regiment).</p>
+                        <h3>No. 14 Dress</h3>
+                        <p>To be worn by OF-6+. Fully allows watches and tattoos. Features customizable belts (e.g., ETS: Blue with chest pin, RMP: Red).</p>
+                        <h3>HQ Dress (No. 3)</h3>
+                        <p>AEST Gen.+. Allows any pin or patch. Medals are full-size like No. 1s.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" data-title="Specialist Attire">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h2>🧥 Section 1.1.7 — Greatcoats & Frock Coats</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-section">
+                        <p>Worn by OF-7+ and within medal ceremonies. Requires two British Army honors (e.g., George Medal, Victoria Cross). Must be commissioned through the Quartermaster General. Gloves must be black only.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" data-title="Armbands & Medals">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h2>🎖️ Section 1.1.8 & 1.1.9 — Armbands & Medals</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-section">
+                        <h3>Armbands</h3>
+                        <p>Usually worn on the right arm. Can be requested for No. 1s, No. 2s, and Regimental Suits. Quartermasters High Command may wear two armbands.</p>
+                        <h3>Medals</h3>
+                        <p>Can only be worn with proof of achievement. Detailed in a separate document.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" data-title="Neck Covers">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h2>🧣 Section 1.1.10 — No. 1 Neck Covers</h2>
+                    <div class="accordion-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="content-section">
+                        <p>Available for No. 1 formal dress for individuals above OF-7. Can be customized (e.g., Blue for ETS).</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all other items
+            document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+            
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        function filterRegulations(query) {
+            const lowQuery = query.toLowerCase();
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                const title = item.getAttribute('data-title').toLowerCase();
+                const content = item.querySelector('.accordion-content').textContent.toLowerCase();
+                
+                if (title.includes(lowQuery) || content.includes(lowQuery)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+    <div class="footer-container"></div>
+</body>
+</html>

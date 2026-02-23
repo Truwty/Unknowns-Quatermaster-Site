@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Medal recipients and honours roll for British Army decorations and awards.">
+    <title>Quartermaster Store - Medal Recipients</title>
+    <link rel="icon" href="images/LOGO.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="components.js"></script>
+</head>
+<body>
+<!-- PAGE LOCK OVERLAY -->
+<div id="pageLock" role="dialog" aria-modal="true" aria-labelledby="lockTitle" aria-describedby="lockDescription">
+    <div class="lock-background-pattern"></div>
+    <div class="lock-container">
+        <div class="lock-icon-wrapper">
+            <div class="lock-icon">🔒</div>
+            <div class="lock-glow"></div>
+        </div>
+
+        <h1 id="lockTitle" class="lock-title">Quartermaster Store Locked</h1>
+
+        <p id="lockDescription" class="lock-subtitle">
+            Access restricted until official release.
+        </p>
+
+        <div class="countdown-container">
+            <div id="countdown" class="countdown" aria-live="polite" aria-atomic="true">
+                <div class="countdown-segment">
+                    <span class="countdown-value" id="countdownDays">0</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-segment">
+                    <span class="countdown-value" id="countdownHours">0</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-segment">
+                    <span class="countdown-value" id="countdownMinutes">0</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-segment">
+                    <span class="countdown-value" id="countdownSeconds">0</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="unlock-date">
+            <span class="unlock-date-icon">📅</span>
+            Unlocks: <strong>Sunday 22 February — 21:00 GMT</strong>
+        </div>
+
+        <div class="lock-progress-bar">
+            <div class="lock-progress-fill" id="lockProgress"></div>
+        </div>
+    </div>
+</div>
+
+    <header class="main-nav-container"></header>
+    <div class="page-container">
+        <div class="page-header">
+            <h1>🎖️ Medal Recipients</h1>
+            <p>Honours roll of distinguished service members who have received British Army decorations.</p>
+            <div style="margin-top: 30px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                <input type="text" id="recipientSearch" placeholder="Search by medal or recipient name..." onkeyup="filterRecipients(this.value)" class="search-input">
+            </div>
+        </div>
+
+        <div class="recipients-container" id="recipientsGrid">
+            <!-- Dynamically Populated -->
+        </div>
+    </div>
+
+    <script>
+        const recipientCategories = {
+            "Gallantry & Bravery Awards": [
+                { name: "Victoria Cross (VC)", criteria: "Supreme Valor", desc: "The highest decoration awarded for conspicuous bravery in the presence of the enemy.", img: "victoria-cross.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii"] },
+                { name: "George Cross (GC)", criteria: "Gallantry", desc: "Awarded for acts of the greatest heroism or of the most conspicuous courage in circumstances of extreme danger.", img: "george-cross.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii", "TechSypher", "novaecomps"] },
+                { name: "Conspicuous Gallantry Cross (CGC)", criteria: "Gallantry", desc: "Awarded in recognition of acts of conspicuous gallantry during active operations against the enemy.", img: "conspicuous-gallantry-cross.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "McDorka", "63xy15", "Vyntrioz", "24kdxt", "UnknownKatii"] },
+                { name: "Distinguished Service Order (DSO)", criteria: "Leadership", desc: "Awarded for meritorious or distinguished service by officers of the armed forces during wartime.", img: "distinguished-service-order.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "McDorka", "63xy15", "za4xn", "Whos_sya27", "zqos_o", "Ace121999", "Tigerinshipy", "csa1018", "Cryptic1182", "FlexySilvia", "GriffinMatthews1963", "Nitroxxxes", "Doubletree1100", "im_wreckin", "Fembi_hi", "blabla936r", "Simply_Aiden17", "xXOnlyumwaXx", "UnknownKatii", "hugh_deeny", "lol_pi31415", "Ayaanmini", "natn299", "Petjepuk1234567", "qRandomxx", "PaladinsZhin", "ToastedCrook", "Vyntrioz", "Ekpixelation", "24kdxt", "D0m_Insanity", "Alexndad090"] },
+                { name: "Military Cross (MC)", criteria: "Bravery", desc: "Awarded for an act or acts of exemplary gallantry during active operations against the enemy on land.", img: "military-cross.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "Ace121999", "Fembi_hi", "UnknownKatii", "freshy456io", "zqos_o", "D0m_Insanity", "im_wreckin"] },
+                { name: "Distinguished Flying Cross (DFC)", criteria: "Air Gallantry", desc: "Awarded for an act or acts of valour, courage or devotion to duty whilst flying in active operations against the enemy.", img: "distinguished-flying-cross.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii"] },
+                { name: "Distinguished Service Cross (DSC)", criteria: "Naval Gallantry", desc: "Awarded for distinguished service during active operations against the enemy at sea.", img: "distinguished-service-cross.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "George Medal (GM)", criteria: "Gallantry", desc: "Awarded for conspicuous gallantry not in the face of the enemy.", img: "george-medal.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii"] },
+                { name: "King's Gallantry Medal (KGM)", criteria: "Gallantry", desc: "Awarded for exemplary acts of bravery by civilians and members of the armed forces.", img: "kings-gallantry-medal.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "za4xn", "UnknownKatii"] }
+            ],
+            "Orders & State Honours": [
+                { name: "Order of the Garter (KG/LG)", criteria: "Chivalry", desc: "The most senior and oldest British Order of Chivalry, founded by Edward III in 1348.", img: "order-of-the-garter.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "McDorka", "Ekpixelation", "hugh_deeny", "63xy15", "UnknownKatii", "D0m_Insanity"] },
+                { name: "Order of the Thistle (KT/LT)", criteria: "Chivalry", desc: "The most ancient and most noble order of chivalry associated with Scotland.", img: "order-of-the-thistle.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "Order of Merit (OM)", criteria: "Distinction", desc: "Recognizes distinguished service in the armed forces, science, art, literature, or culture.", img: "order-of-merit.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii"] },
+                { name: "Order of the Companions of Honour (CH)", criteria: "Achievement", desc: "Awarded for outstanding achievement in the arts, science, medicine, or government.", img: "order-of-the-companions-of-honour.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "blabla936r", "Simply_Aiden17", "xXOnlyumwaXx", "0nlyRxcky", "UnknownKatii"] },
+                { name: "Order of the Bath (GCB/KCB/CB)", criteria: "Merit", desc: "Awarded for outstanding service in the armed forces or the civil service.", img: "order-of-the-bath.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "hjjproa", "qRandomxx", "blabla936r", "xXOnlyumwaXx", "UnknownKatii", "Ekpixelation", "novaecomps"] },
+                { name: "Order of St Michael and St George", criteria: "Service", desc: "Awarded for distinguished service in relation to foreign affairs and service overseas.", img: "order-of-st-michael-and-st-george.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "Fembi_hi", "UnknownKatii"] },
+                { name: "Knight/Dame Grand Cross (GBE)", criteria: "Merit", desc: "Highest rank of the Order of the British Empire for exceptional service.", img: "order-of-the-british-empire.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "csa1018", "za4xn", "hugh_deeny", "UnknownKatii"] },
+                { name: "Knight/Dame Commander (KBE/DBE)", criteria: "Merit", desc: "Second rank of the Order of the British Empire for distinguished service.", img: "order-of-the-british-empire.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "csa1018", "za4xn", "hugh_deeny", "UnknownKatii"] },
+                { name: "Commander (CBE)", criteria: "Merit", desc: "Third rank of the Order of the British Empire for prominent national service.", img: "commander-of-the-british-empire.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "csa1018", "za4xn", "hugh_deeny", "UnknownKatii"] },
+                { name: "Officer (OBE)", criteria: "Merit", desc: "Fourth rank of the Order of the British Empire for distinguished regional service.", img: "officer-of-the-british-empire.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "csa1018", "za4xn", "hugh_deeny", "UnknownKatii"] },
+                { name: "Member (MBE)", criteria: "Merit", desc: "Fifth rank of the Order of the British Empire for meritorious service.", img: "member-of-the-british-empire.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "csa1018", "za4xn", "hugh_deeny", "UnknownKatii"] },
+                { name: "British Empire Medal (BEM)", criteria: "Merit", desc: "Awarded for meritorious civil or military service.", img: "british-empire-medal-bem.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "csa1018", "za4xn", "hugh_deeny", "UnknownKatii"] },
+                { name: "Royal Victorian Order", criteria: "Personal Service", desc: "Awarded for distinguished personal service to the monarch.", img: "royal-victorian-order.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii"] }
+            ],
+            "Distinguished & Meritorious Service": [
+                { name: "Meritorious Service Medal (MSM)", criteria: "Long Service", desc: "Awarded to warrant officers, non-commissioned officers and other ranks for long and meritorious service.", img: "meritorious-service-medal.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "natn299", "alexndad090", "im_wreckin"] },
+                { name: "Royal Red Cross (RRC)", criteria: "Nursing Service", desc: "Awarded to military nursing services for exceptional devotion and competency.", img: "dowroyal-red-cross.pngnload.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "Associate Royal Red Cross (ARRC)", criteria: "Nursing Service", desc: "Second class of the Royal Red Cross for distinguished nursing service.", img: "dowassociate-royal-red-cross.pngnload.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "King's Volunteer Reserves Medal (KVRM)", criteria: "Reserve Service", desc: "Recognizes the dedicated service and commitment of the Volunteer Reserves.", img: "kings-volunteer-reserves-medal-kvrm.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "csa1018", "hjjproa", "UnknownKatii"] }
+            ],
+            "Campaign & Operational Service": [
+                { name: "General Service Medal (2008)", criteria: "Campaign Service", desc: "Awarded for campaign service in designated operations.", img: "general-service-medal-2008.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "Operational Service Medal Afghanistan", criteria: "Campaign Service", desc: "Awarded for operational service in Afghanistan.", img: "osm-afghanistan.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "Operational Service Medal Iraq & Syria", criteria: "Campaign Service", desc: "Awarded for operational service in Iraq and Syria.", img: "osm-iraq-syria.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "Operational Service Medal Sierra Leone", criteria: "Campaign Service", desc: "Awarded for operational service in Sierra Leone.", img: "osm_sierra_leone_2.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii"] },
+                { name: "Operational Service Medal DRC", criteria: "Campaign Service", desc: "Awarded for operational service in Democratic Republic of Congo.", img: "osm_DRC.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii"] },
+                { name: "Operational Service Medal South Sudan", criteria: "Campaign Service", desc: "Awarded for operational service in South Sudan.", img: "osm_SouthSudan.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii"] },
+                { name: "Accumulated Campaign Service Medal", criteria: "Campaign Service", desc: "Awarded for accumulated operational service across multiple campaigns.", img: "ACS.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "Humanitarian Medal", criteria: "Humanitarian Service", desc: "Awarded for humanitarian operations and disaster relief.", img: "Humanitarian-Operations-medal.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "Wider Service Medal", criteria: "Service", desc: "Awarded for service in support of UK operations.", img: "Wider_Service.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] }
+            ],
+            "Long Service & Efficiency": [
+                { name: "Long Service and Good Conduct Medal", criteria: "Long Service", desc: "Awarded for long service and good conduct in the military.", img: "Long_service_Good_conduct.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze"] },
+                { name: "Volunteer Reserves Service Medal", criteria: "Reserve Service", desc: "Awarded for long and efficient service in the Volunteer Reserves.", img: "kings-volunteer-reserves-medal-kvrm.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "D0m_Insanity"] },
+                { name: "Cadet Forces Medal", criteria: "Cadet Service", desc: "Awarded for long and efficient service with cadet forces.", img: "cadet-forces-long-service-medal-lrg_1_4.jpg", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii"] }
+            ],
+            "Royal & Commemorative": [
+                { name: "King's Coronation Medal 2023", criteria: "Commemorative", desc: "Commemorative medal to mark the Coronation of King Charles III and Queen Camilla.", img: "king-charles-iii-coronation-medal.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii", "novaecomps"] },
+                { name: "Queen's Platinum Jubilee Medal", criteria: "Commemorative", desc: "Commemorative medal to mark the Platinum Jubilee of Queen Elizabeth II.", img: "king-charles-iii-coronation-medal.png", awardees: ["PowerReaper1", "UnknownCanadaishere", "SinfulSnooze", "TruSnooze", "UnknownKatii", "novaecomps"] }
+            ]
+        };
+
+        function toggleRecipients(medalId) {
+            const list = document.getElementById(`recipients-${medalId}`);
+            const arrow = document.getElementById(`arrow-${medalId}`);
+            
+            if (list.classList.contains('expanded')) {
+                list.classList.remove('expanded');
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                list.classList.add('expanded');
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function renderRecipients() {
+            const container = document.getElementById('recipientsGrid');
+            let html = '';
+            let globalIndex = 0;
+            
+            for (const [category, medals] of Object.entries(recipientCategories)) {
+                html += `
+                    <div class="category-section">
+                        <h2 class="category-title">${category}</h2>
+                `;
+                
+                medals.forEach(medal => {
+                    html += `
+                        <div class="recipient-medal-card">
+                            <div class="medal-header">
+                                <div class="medal-image-wrapper">
+                                    <img src="images/medals/${medal.img}" alt="${medal.name}" loading="lazy" onerror="this.src='images/LOGO.png'">
+                                </div>
+                                <div class="medal-details">
+                                    <div class="medal-criteria-badge">${medal.criteria}</div>
+                                    <h2 class="medal-name">${medal.name}</h2>
+                                    <p class="medal-description">${medal.desc}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="recipients-toggle" onclick="toggleRecipients('${globalIndex}')">
+                                <div class="recipients-toggle-text">
+                                    <span class="recipients-count">${medal.awardees.length}</span>
+                                    <span>Decorated Members</span>
+                                </div>
+                                <span class="toggle-arrow" id="arrow-${globalIndex}">▼</span>
+                            </div>
+                            
+                            <div class="recipients-list" id="recipients-${globalIndex}">
+                                <div class="recipients-grid">
+                                    ${medal.awardees.map(name => `
+                                        <div class="recipient-item">
+                                            <div class="recipient-icon"></div>
+                                            <span class="recipient-name">${name}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    globalIndex++;
+                });
+                
+                html += `</div>`;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function filterRecipients(query) {
+            const lowQuery = query.toLowerCase();
+            
+            document.querySelectorAll('.category-section').forEach(section => {
+                let hasVisibleCards = false;
+                
+                section.querySelectorAll('.recipient-medal-card').forEach(card => {
+                    const medalName = card.querySelector('.medal-name').textContent.toLowerCase();
+                    const recipients = Array.from(card.querySelectorAll('.recipient-name')).map(el => el.textContent.toLowerCase());
+                    const categoryName = section.querySelector('.category-title').textContent.toLowerCase();
+                    
+                    const matchesMedal = medalName.includes(lowQuery);
+                    const matchesCategory = categoryName.includes(lowQuery);
+                    const matchesRecipient = recipients.some(name => name.includes(lowQuery));
+                    
+                    if (matchesMedal || matchesCategory || matchesRecipient) {
+                        card.style.display = '';
+                        hasVisibleCards = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                section.style.display = hasVisibleCards ? '' : 'none';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRecipients();
+        });
+    </script>
+    <div class="footer-container"></div>
+
+    <script>
+/*
+    PAGE LOCK SYSTEM
+    Unlock Date: Sunday 22 February 2026 — 21:00 GMT
+*/
+
+const unlockDate = new Date("2026-02-22T21:00:00+00:00");
+const lockStartDate = new Date("2026-02-01T00:00:00+00:00");
+
+function updateCountdown() {
+    const now = new Date();
+    const diff = unlockDate - now;
+
+    if (diff <= 0) {
+        unlockPage();
+        return;
+    }
+
+    // Calculate time components
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    // Update countdown display
+    const daysEl = document.getElementById("countdownDays");
+    const hoursEl = document.getElementById("countdownHours");
+    const minutesEl = document.getElementById("countdownMinutes");
+    const secondsEl = document.getElementById("countdownSeconds");
+
+    if (daysEl) animateValue(daysEl, days);
+    if (hoursEl) animateValue(hoursEl, hours);
+    if (minutesEl) animateValue(minutesEl, minutes);
+    if (secondsEl) animateValue(secondsEl, seconds);
+
+    // Update progress bar
+    updateProgressBar(now);
+}
+
+function animateValue(element, value) {
+    const paddedValue = String(value).padStart(2, '0');
+    if (element.textContent !== paddedValue) {
+        element.style.animation = 'countdownFlip 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        element.textContent = paddedValue;
+        setTimeout(() => {
+            element.style.animation = '';
+        }, 600);
+    }
+}
+
+function updateProgressBar(now) {
+    const totalDuration = unlockDate - lockStartDate;
+    const elapsed = now - lockStartDate;
+    const progress = Math.min(Math.max((elapsed / totalDuration) * 100, 0), 100);
+    
+    const progressBar = document.getElementById("lockProgress");
+    if (progressBar) {
+        progressBar.style.width = progress + "%";
+    }
+}
+
+function unlockPage() {
+    const lock = document.getElementById("pageLock");
+    
+    // Add unlock animation class
+    lock.classList.add('unlocking');
+    
+    // Restore scrolling
+    document.body.style.overflow = "";
+    
+    // Play unlock animation
+    lock.style.animation = "lockUnlock 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards";
+    
+    // Remove lock element after animation
+    setTimeout(() => {
+        if (lock && lock.parentNode) {
+            lock.remove();
+        }
+        clearInterval(timer);
+        
+        // Show success notification
+        showUnlockNotification();
+    }, 1500);
+}
+
+function showUnlockNotification() {
+    // Create toast notification if toast system exists
+    if (typeof showToast === 'function') {
+        showToast('🎖️ Access Granted! Welcome to the Medal Recipients archive.');
+    }
+}
+
+// Prevent scrolling while locked
+document.body.style.overflow = "hidden";
+
+// Add keyboard accessibility
+document.addEventListener('keydown', (e) => {
+    const lock = document.getElementById("pageLock");
+    if (lock && e.key === 'Escape') {
+        // Show message that escape doesn't unlock
+        const subtitle = lock.querySelector('.lock-subtitle');
+        if (subtitle) {
+            const originalText = subtitle.textContent;
+            subtitle.textContent = "This page will unlock automatically at the scheduled time.";
+            subtitle.style.color = "var(--accent-gold)";
+            setTimeout(() => {
+                subtitle.textContent = originalText;
+                subtitle.style.color = "";
+            }, 3000);
+        }
+    }
+});
+
+// Start countdown timer
+const timer = setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// Initial progress bar update
+updateProgressBar(new Date());
+</script>
+
+</body>
+</html>
